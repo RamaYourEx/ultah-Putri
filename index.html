@@ -7,8 +7,8 @@
 <style>
 body {
   font-family: "Poppins", "Segoe UI", Tahoma, sans-serif;
-  background: #fdf6f0; /* soft cream */
-  color: #444;
+  background: #fff0f5; /* soft pink */
+  color: #555;
   text-align: center;
   padding: 40px 20px;
 }
@@ -21,7 +21,7 @@ body {
   max-width: 600px;
 }
 h1 {
-  color: #6b5b95; /* soft purple */
+  color: #d18ca0; /* pink lembut */
   font-size: 28px;
   margin-bottom: 15px;
 }
@@ -30,6 +30,9 @@ p {
   line-height: 1.6;
   margin: 8px 0;
   color: #666;
+  min-height: 60px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 .slideshow {
   margin: 25px 0;
@@ -54,35 +57,32 @@ p {
   transition: opacity 1.2s ease-in-out;
 }
 .slideshow img.active { opacity: 1; }
-button {
-  margin-top: 20px;
-  padding: 10px 22px;
-  font-size: 15px;
+#playBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 18px;
+  font-size: 14px;
   border: none;
   border-radius: 25px;
-  background: #c3aed6; /* soft lilac */
+  background: rgba(209,140,160,0.8);
   color: white;
   cursor: pointer;
   transition: background 0.3s;
+  z-index: 1000;
 }
-button:hover { background: #a889c6; }
+#playBtn:hover { background: rgba(209,140,160,0.9);}
 </style>
 </head>
 <body>
 
 <div class="card">
-  <h1>Selamat Ulang Tahun, Putri yang  ke 23 Tahun. 🎂</h1>
-  <p>Meski kamu gak pernah tanya kabar aku gpp ko hehe,<br>
-     aku tetap mendoakan yang terbaik untuk kmu. <br>
-     Semoga sehat selalu, panjang umur yah.</p>
-  <p>See you,<br>
-     my favorite stranger .
-   <p>Semoga kita bisa jadi teman yah :).</p>
-
+  <h1>Selamat Ulang Tahun, Putri yg ke 23 Tahun. 🎉🎂🥳</h1>
+  <p id="message"></p>
   <div class="slideshow" id="slideshow"></div>
-
-  <button onclick="playMusic()">▶️ Putar Musik</button>
 </div>
+
+<button id="playBtn" onclick="playMusic()">▶️ Putar Musik</button>
 
 <audio id="music" loop autoplay muted>
   <source src="jamrud-selamat-ulang-tahun.mp3" type="audio/mpeg">
@@ -108,23 +108,56 @@ photos.forEach((photo, index) => {
 // Slideshow otomatis dengan fade tiap 3 detik
 let slideIndex = 0;
 const slides = document.querySelectorAll(".slideshow img");
+const music = document.getElementById("music");
+
 setInterval(() => {
+  // Fade out musik sedikit saat ganti slide
+  fadeOut(music, 0.6, 200);
   slides[slideIndex].classList.remove("active");
   slideIndex = (slideIndex + 1) % slides.length;
   slides[slideIndex].classList.add("active");
+  fadeIn(music, 0.6, 500);
 }, 3000);
 
-// Musik
-const music = document.getElementById("music");
+// Fungsi fade musik
+function fadeOut(audio, targetVol, duration) {
+  let vol = audio.volume;
+  const step = (vol - targetVol) / (duration/50);
+  const fade = setInterval(()=>{
+    if(vol > targetVol){
+      vol -= step;
+      audio.volume = Math.max(vol, targetVol);
+    } else {
+      clearInterval(fade);
+    }
+  },50);
+}
+
+function fadeIn(audio, targetVol, duration){
+  let vol = audio.volume;
+  const step = (targetVol - vol) / (duration/50);
+  const fade = setInterval(()=>{
+    if(vol < targetVol){
+      vol += step;
+      audio.volume = Math.min(vol, targetVol);
+    } else {
+      clearInterval(fade);
+    }
+  },50);
+}
+
+// Musik autoplay / tombol play cadangan
 function playMusic() {
-  music.muted = false; // unmute setelah user klik
+  music.muted = false;
+  music.volume = 0.6;
   music.play();
 }
 
-// Coba autoplay saat load
+// Autoplay musik saat load
 window.addEventListener('load', () => {
   music.muted = false;
-  music.play().catch(()=>{ /* autoplay gagal, user klik tombol */ });
+  music.volume = 0.6;
+  music.play().catch(()=>{});
 });
 
 // Klik di body juga bisa play musik
@@ -134,6 +167,29 @@ document.body.addEventListener('click', () => {
     music.play().catch(()=>{});
   }
 });
+
+// Typing effect per kalimat
+const message = [
+  "Meski kamu gak pernah tanya kabar aku gpp ko,",
+  "aku tetap mendoakan yang terbaik untuk kmu.",
+  "Semoga sehat selalu, panjang umur yah.",
+  "See you, my favorite stranger."
+];
+const msgElem = document.getElementById("message");
+let idx = 0;
+
+function showSentence(){
+  if(idx < message.length){
+    msgElem.style.opacity = 0;
+    setTimeout(()=>{
+      msgElem.innerHTML = message[idx];
+      msgElem.style.opacity = 1;
+      idx++;
+      setTimeout(showSentence, 2000); // jeda antar kalimat
+    }, 500);
+  }
+}
+window.addEventListener('load', showSentence);
 </script>
 
 </body>
