@@ -31,11 +31,7 @@ h1 {
   color: #666;
   min-height: 60px;
   cursor: pointer;
-}
-#indicator {
-  font-size: 14px;
-  color: #999;
-  margin: 5px 0;
+  transition: opacity 0.5s ease-in-out;
 }
 #message-container button {
   padding: 5px 12px;
@@ -94,7 +90,6 @@ h1 {
 
   <div id="message-container" style="text-align:center; margin-top:20px;">
     <p id="message">Klik di sini untuk memulai ucapan</p>
-    <p id="indicator"></p>
     <div id="buttons" style="margin-top:10px; display:none;">
       <button id="prevBtn" disabled>◀ Sebelumnya</button>
       <button id="nextBtn" disabled>Berikutnya ▶</button>
@@ -151,7 +146,7 @@ document.body.addEventListener('click',()=>{
   }
 });
 
-// Ucapan dengan klik awal → langsung tombol + indikator
+// Ucapan dengan klik awal → tombol + efek fade
 const allMessages = [
   "Meski kamu gak pernah tanya kabar aku gpp,",
   "aku tetap mendoakan yang terbaik untuk kmu.",
@@ -160,7 +155,6 @@ const allMessages = [
 ];
 
 const msgElem = document.getElementById("message");
-const indicatorElem = document.getElementById("indicator");
 const buttonsDiv = document.getElementById("buttons");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
@@ -170,9 +164,16 @@ msgElem.addEventListener('click', ()=>{
   msgElem.style.cursor = 'default';
   buttonsDiv.style.display = 'block';
 
-  // tampil kalimat pertama & indikator
-  msgElem.innerHTML = allMessages[idx];
-  indicatorElem.innerHTML = `Kalimat ${idx+1}/${allMessages.length}`;
+  // Tampilkan kalimat pertama dengan fade
+  function showMessage(index){
+    msgElem.style.opacity = 0;
+    setTimeout(()=>{
+      msgElem.innerHTML = allMessages[index];
+      msgElem.style.opacity = 1;
+    },200);
+  }
+
+  showMessage(idx);
   prevBtn.disabled = true;
   nextBtn.disabled = (allMessages.length <= 1);
 
@@ -180,8 +181,7 @@ msgElem.addEventListener('click', ()=>{
   nextBtn.addEventListener('click', ()=>{
     if(idx < allMessages.length-1){
       idx++;
-      msgElem.innerHTML = allMessages[idx];
-      indicatorElem.innerHTML = `Kalimat ${idx+1}/${allMessages.length}`;
+      showMessage(idx);
       prevBtn.disabled = false;
       nextBtn.disabled = (idx === allMessages.length-1);
     }
@@ -191,8 +191,7 @@ msgElem.addEventListener('click', ()=>{
   prevBtn.addEventListener('click', ()=>{
     if(idx > 0){
       idx--;
-      msgElem.innerHTML = allMessages[idx];
-      indicatorElem.innerHTML = `Kalimat ${idx+1}/${allMessages.length}`;
+      showMessage(idx);
       nextBtn.disabled = false;
       prevBtn.disabled = (idx === 0);
     }
