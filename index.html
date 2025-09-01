@@ -25,14 +25,23 @@ h1 {
   font-size: 28px;
   margin-bottom: 15px;
 }
-p {
+p, #message-container span {
   font-size: 16px;
   line-height: 1.6;
   margin: 8px 0;
   color: #666;
   min-height: 60px;
-  cursor: pointer; /* tanda bisa diklik */
 }
+#message-container button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(209,140,160,0.8);
+  color: white;
+  cursor: pointer;
+}
+#message-container button:hover { background: rgba(209,140,160,0.9);}
 .slideshow {
   margin: 25px 0;
   position: relative;
@@ -76,8 +85,14 @@ p {
 <body>
 
 <div class="card">
-  <h1>Selamat Ulang Tahun, Putri yang Ke 23 Tahun 🎉🥳🎂</h1>
-  <p id="message">Klik di sini untuk melihat ucapan</p>
+  <h1>Selamat Ulang Tahun , Putri yang Ke 23 Tahun. 🎉🥳🎂</h1>
+
+  <div id="message-container">
+    <button id="prevBtn">◀ Sebelumnya</button>
+    <span id="message">Klik tombol untuk ucapan</span>
+    <button id="nextBtn">Berikutnya ▶</button>
+  </div>
+
   <div class="slideshow" id="slideshow"></div>
 </div>
 
@@ -120,15 +135,11 @@ function playMusic(){
   music.volume=0.6;
   music.play();
 }
-
-// Autoplay saat load
 window.addEventListener('load',()=>{
   music.muted=false;
   music.volume=0.6;
   music.play().catch(()=>{});
 });
-
-// Klik di body juga play musik
 document.body.addEventListener('click',()=>{
   if(music.paused){
     music.muted=false;
@@ -136,7 +147,7 @@ document.body.addEventListener('click',()=>{
   }
 });
 
-// Ucapan klik per klik
+// Ucapan maju & mundur
 const messageArr=[
   "Meski kamu gak pernah tanya kabar aku gpp,",
   "aku tetap mendoakan yang terbaik untuk kmu.",
@@ -145,10 +156,24 @@ const messageArr=[
 ];
 const msgElem=document.getElementById("message");
 let idx=0;
-msgElem.addEventListener('click', ()=>{
-  if(idx < messageArr.length){
-    msgElem.innerHTML = messageArr[idx];
+function showSentence(){
+  msgElem.innerHTML = messageArr[idx];
+}
+showSentence();
+
+// Tombol next
+document.getElementById("nextBtn").addEventListener('click', ()=>{
+  if(idx < messageArr.length-1){
     idx++;
+    showSentence();
+  }
+});
+
+// Tombol prev
+document.getElementById("prevBtn").addEventListener('click', ()=>{
+  if(idx > 0){
+    idx--;
+    showSentence();
   }
 });
 </script>
