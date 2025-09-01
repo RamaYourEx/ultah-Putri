@@ -11,6 +11,7 @@ body {
   color: #555;
   text-align: center;
   padding: 40px 20px;
+  overflow-x: hidden;
 }
 .card {
   background: #ffffff;
@@ -71,13 +72,30 @@ p {
   transition: background 0.3s;
   z-index: 1000;
 }
-#playBtn:hover { background: rgba(209,140,160,0.9);}
+#playBtn:hover { background: rgba(209,140,160,0.9); }
+
+/* Balon */
+.balloon {
+  position: absolute;
+  bottom: -100px;
+  width: 30px;
+  height: 40px;
+  background-color: rgba(209,140,160,0.7);
+  border-radius: 50% 50% 50% 50%;
+  animation-name: floatUp;
+  animation-timing-function: linear;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-110vh); }
+}
 </style>
 </head>
 <body>
 
 <div class="card">
-  <h1>Selamat Ulang Tahun, Putri yg ke 23 Tahun. 🎉🎂🥳</h1>
+  <h1>Selamat Ulang Tahun, Putri yang Ke  23 Tahun.🎂</h1>
   <p id="message"></p>
   <div class="slideshow" id="slideshow"></div>
 </div>
@@ -90,106 +108,90 @@ p {
 </audio>
 
 <script>
-// Daftar foto 23 file
+// Daftar 23 file foto
 const photos = [];
 for(let i=1;i<=23;i++){
   photos.push(`foto${i}.jpg`);
 }
 
-// Generate img tags untuk slideshow
+// Generate slideshow
 const slideshowDiv = document.getElementById('slideshow');
-photos.forEach((photo, index) => {
+photos.forEach((photo,index)=>{
   const img = document.createElement('img');
   img.src = photo;
   if(index===0) img.classList.add('active');
   slideshowDiv.appendChild(img);
 });
 
-// Slideshow otomatis dengan fade tiap 3 detik
+// Slideshow otomatis
 let slideIndex = 0;
 const slides = document.querySelectorAll(".slideshow img");
-const music = document.getElementById("music");
-
-setInterval(() => {
-  // Fade out musik sedikit saat ganti slide
-  fadeOut(music, 0.6, 200);
+setInterval(()=>{
   slides[slideIndex].classList.remove("active");
-  slideIndex = (slideIndex + 1) % slides.length;
+  slideIndex = (slideIndex+1) % slides.length;
   slides[slideIndex].classList.add("active");
-  fadeIn(music, 0.6, 500);
-}, 3000);
+},3000);
 
-// Fungsi fade musik
-function fadeOut(audio, targetVol, duration) {
-  let vol = audio.volume;
-  const step = (vol - targetVol) / (duration/50);
-  const fade = setInterval(()=>{
-    if(vol > targetVol){
-      vol -= step;
-      audio.volume = Math.max(vol, targetVol);
-    } else {
-      clearInterval(fade);
-    }
-  },50);
-}
-
-function fadeIn(audio, targetVol, duration){
-  let vol = audio.volume;
-  const step = (targetVol - vol) / (duration/50);
-  const fade = setInterval(()=>{
-    if(vol < targetVol){
-      vol += step;
-      audio.volume = Math.min(vol, targetVol);
-    } else {
-      clearInterval(fade);
-    }
-  },50);
-}
-
-// Musik autoplay / tombol play cadangan
-function playMusic() {
-  music.muted = false;
-  music.volume = 0.6;
+// Musik
+const music = document.getElementById("music");
+function playMusic(){
+  music.muted=false;
+  music.volume=0.6;
   music.play();
 }
 
-// Autoplay musik saat load
-window.addEventListener('load', () => {
-  music.muted = false;
-  music.volume = 0.6;
+// Autoplay saat load
+window.addEventListener('load',()=>{
+  music.muted=false;
+  music.volume=0.6;
   music.play().catch(()=>{});
 });
 
-// Klik di body juga bisa play musik
-document.body.addEventListener('click', () => {
+// Klik di body juga play musik
+document.body.addEventListener('click',()=>{
   if(music.paused){
-    music.muted = false;
+    music.muted=false;
     music.play().catch(()=>{});
   }
 });
 
 // Typing effect per kalimat
-const message = [
-  "Meski kamu gak pernah tanya kabar aku gpp ko,",
+const messageArr=[
+  "Meski kamu gak pernah tanya kabar aku gpp ko hehe  :),",
   "aku tetap mendoakan yang terbaik untuk kmu.",
   "Semoga sehat selalu, panjang umur yah.",
-  "See you, my favorite stranger."
+  "See you, my favorite stranger
+  "Semoga bisa berteman yah :)"
 ];
-const msgElem = document.getElementById("message");
-let idx = 0;
-
+const msgElem=document.getElementById("message");
+let idx=0;
 function showSentence(){
-  if(idx < message.length){
-    msgElem.style.opacity = 0;
+  if(idx<messageArr.length){
+    msgElem.style.opacity=0;
     setTimeout(()=>{
-      msgElem.innerHTML = message[idx];
-      msgElem.style.opacity = 1;
+      msgElem.innerHTML=messageArr[idx];
+      msgElem.style.opacity=1;
       idx++;
-      setTimeout(showSentence, 2000); // jeda antar kalimat
-    }, 500);
+      setTimeout(showSentence,2000);
+    },500);
   }
 }
-window.addEventListener('load', showSentence);
+window.addEventListener('load',showSentence);
+
+// Balon sekali saat load
+function createBalloonsOnce(count = 10){
+  for(let i=0; i<count; i++){
+    const balloon = document.createElement('div');
+    balloon.classList.add('balloon');
+    balloon.style.left = Math.random()*100 + 'vw';
+    balloon.style.animationDuration = (4 + Math.random()*4) + 's';
+    balloon.style.width = (20 + Math.random()*20) + 'px';
+    balloon.style.height = (30 + Math.random()*20) + 'px';
+    document.body.appendChild(balloon);
+    setTimeout(()=>{ balloon.remove(); }, 10000);
+  }
+}
+window.addEventListener('load',()=>{ createBalloonsOnce(10); });
 </script>
 
 </body>
