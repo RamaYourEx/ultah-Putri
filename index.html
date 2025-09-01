@@ -7,7 +7,7 @@
 <style>
 body {
   font-family: "Poppins", "Segoe UI", Tahoma, sans-serif;
-  background: #fff0f5; /* soft pink */
+  background: #fff0f5;
   color: #555;
   text-align: center;
   padding: 40px 20px;
@@ -21,19 +21,19 @@ body {
   max-width: 600px;
 }
 h1 {
-  color: #d18ca0; /* pink lembut */
+  color: #d18ca0;
   font-size: 28px;
   margin-bottom: 15px;
 }
-p, #message-container span {
+#message-container p {
   font-size: 16px;
   line-height: 1.6;
-  margin: 8px 0;
   color: #666;
   min-height: 60px;
+  cursor: pointer;
 }
 #message-container button {
-  padding: 5px 10px;
+  padding: 5px 12px;
   margin: 0 5px;
   border: none;
   border-radius: 5px;
@@ -85,12 +85,14 @@ p, #message-container span {
 <body>
 
 <div class="card">
-  <h1>Selamat Ulang Tahun , Putri yang Ke 23 Tahun. 🎉🥳🎂</h1>
+  <h1>Selamat Ulang Tahun, Putri yang Ke 23 Tahun 🎉🥳🎂</h1>
 
-  <div id="message-container">
-    <button id="prevBtn">◀ Sebelumnya</button>
-    <span id="message">Klik tombol untuk ucapan</span>
-    <button id="nextBtn">Berikutnya ▶</button>
+  <div id="message-container" style="text-align:center; margin-top:20px;">
+    <p id="message">Klik di sini untuk memulai ucapan</p>
+    <div id="buttons" style="margin-top:10px; display:none;">
+      <button id="prevBtn" disabled>◀ Sebelumnya</button>
+      <button id="nextBtn" disabled>Berikutnya ▶</button>
+    </div>
   </div>
 
   <div class="slideshow" id="slideshow"></div>
@@ -104,13 +106,11 @@ p, #message-container span {
 </audio>
 
 <script>
-// Daftar 23 file foto
+// Slideshow 23 foto
 const photos = [];
 for(let i=1;i<=23;i++){
   photos.push(`foto${i}.jpg`);
 }
-
-// Generate slideshow
 const slideshowDiv = document.getElementById('slideshow');
 photos.forEach((photo,index)=>{
   const img = document.createElement('img');
@@ -118,8 +118,6 @@ photos.forEach((photo,index)=>{
   if(index===0) img.classList.add('active');
   slideshowDiv.appendChild(img);
 });
-
-// Slideshow otomatis
 let slideIndex = 0;
 const slides = document.querySelectorAll(".slideshow img");
 setInterval(()=>{
@@ -147,34 +145,63 @@ document.body.addEventListener('click',()=>{
   }
 });
 
-// Ucapan maju & mundur
-const messageArr=[
+// Ucapan 2 tahap
+const initialMessages = [
   "Meski kamu gak pernah tanya kabar aku gpp,",
-  "aku tetap mendoakan yang terbaik untuk kmu.",
+  "aku tetap mendoakan yang terbaik untuk kmu."
+];
+
+const followupMessages = [
   "Semoga sehat selalu, panjang umur yah.",
   "See you, my favorite stranger."
 ];
-const msgElem=document.getElementById("message");
-let idx=0;
-function showSentence(){
-  msgElem.innerHTML = messageArr[idx];
-}
-showSentence();
 
-// Tombol next
-document.getElementById("nextBtn").addEventListener('click', ()=>{
-  if(idx < messageArr.length-1){
-    idx++;
-    showSentence();
-  }
-});
+const msgElem = document.getElementById("message");
+const buttonsDiv = document.getElementById("buttons");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
 
-// Tombol prev
-document.getElementById("prevBtn").addEventListener('click', ()=>{
-  if(idx > 0){
-    idx--;
-    showSentence();
+msgElem.addEventListener('click', ()=>{
+  let idx = 0;
+  msgElem.style.cursor = 'default';
+
+  // Tahap 1: tampil kalimat awal otomatis
+  function showInitial(){
+    if(idx < initialMessages.length){
+      msgElem.innerHTML = initialMessages[idx];
+      idx++;
+      setTimeout(showInitial, 2000);
+    } else {
+      // Tahap 2: tombol maju mundur muncul
+      buttonsDiv.style.display = 'block';
+      let followIdx = 0;
+      msgElem.innerHTML = followupMessages[followIdx];
+      prevBtn.disabled = true;
+      nextBtn.disabled = followupMessages.length <= 1;
+
+      // Tombol next
+      nextBtn.addEventListener('click', ()=>{
+        if(followIdx < followupMessages.length-1){
+          followIdx++;
+          msgElem.innerHTML = followupMessages[followIdx];
+          prevBtn.disabled = false;
+          nextBtn.disabled = (followIdx === followupMessages.length-1);
+        }
+      });
+
+      // Tombol prev
+      prevBtn.addEventListener('click', ()=>{
+        if(followIdx > 0){
+          followIdx--;
+          msgElem.innerHTML = followupMessages[followIdx];
+          nextBtn.disabled = false;
+          prevBtn.disabled = (followIdx === 0);
+        }
+      });
+    }
   }
+
+  showInitial();
 });
 </script>
 
