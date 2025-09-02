@@ -10,35 +10,9 @@
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    background: #fff0f5;
+    background: linear-gradient(135deg, #ffe6f0, #fff0f5, #ffe6cc);
     overflow: hidden;
     color: #333;
-  }
-
-  /* SLIDESHOW BACKGROUND */
-  .slideshow {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  .slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 3s ease-in-out;
-    filter: blur(2px) brightness(0.8);
-  }
-
-  .slide.active {
-    opacity: 1;
   }
 
   /* CARD FEMININ */
@@ -175,8 +149,6 @@
 </head>
 <body>
 
-<div class="slideshow"></div>
-
 <div class="card">
   <h1>Selamat Ulang Tahun Putri ke-23!</h1>
   <p>Meskipun kamu nggak pernah nanya kabar aku, nggak apa-apa kok, hehe 😆<br>
@@ -188,7 +160,8 @@
 
 <div class="cake" onclick="explodeCake()">🎂</div>
 
-<audio id="music" src="jamrud-selamat-ulang-tahun.mp3" autoplay loop></audio>
+<!-- Musik dari file root repo -->
+<audio id="music" src="./jamrud-selamat-ulang-tahun.mp3" autoplay loop></audio>
 
 <script>
   function showMessage() {
@@ -241,28 +214,6 @@
   setInterval(createBalloon, 900);
   setInterval(createConfetti, 250);
   setInterval(createFunText, 3000);
-
-  // SLIDESHOW FOTO 1-23
-  const slideshow = document.querySelector('.slideshow');
-  const totalSlides = 23;
-  const slides = [];
-
-  for(let i=1; i<=totalSlides; i++){
-    const slide = document.createElement('div');
-    slide.classList.add('slide');
-    slide.style.backgroundImage = `url('foto${i}.jpg')`;
-    slideshow.appendChild(slide);
-    slides.push(slide);
-  }
-
-  let currentSlide = 0;
-  slides[currentSlide].classList.add('active');
-
-  setInterval(() => {
-    slides[currentSlide].classList.remove('active');
-    currentSlide = (currentSlide +1) % totalSlides;
-    slides[currentSlide].classList.add('active');
-  }, 5000);
 
 </script>
 </body>
