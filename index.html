@@ -16,6 +16,7 @@ body {
   justify-content:center;
   align-items:flex-start;
   padding-top:50px;
+  cursor:pointer;
 }
 .card {
   background: rgba(255,255,255,0.95);
@@ -69,91 +70,133 @@ p { font-size:1.1rem; line-height:1.5; margin-bottom:20px; color:#555;}
 }
 .balloon { width:15px; height:20px; border-radius:50%; }
 .confetti { width:8px; height:8px; border-radius:2px; }
+/* Popup ucapan */
+.popup {
+  position: fixed;
+  top:50%; left:50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255,255,255,0.95);
+  border-radius:20px;
+  padding:30px;
+  box-shadow: 0 15px 40px rgba(255,105,145,0.3);
+  text-align:center;
+  z-index:50;
+  transition: transform 0.4s ease-in-out;
+  width: 90%;
+  max-width: 400px;
+  font-family: 'Patrick Hand', cursive;
+  color:#ff6f91;
+}
+.popup.show { transform: translate(-50%, -50%) scale(1); }
+.popup button {
+  margin-top:20px;
+  padding:8px 20px;
+  border:none; border-radius:12px;
+  background:#ff8fb1; color:white; cursor:pointer;
+  font-size:1rem;
+}
+.popup button:hover { background:#ff5a8d; }
 </style>
 </head>
 <body>
 
 <div class="card" id="card">
-  <h1>Selamat Ulang Tahun Putri ke-23! 🥳</h1>
+  <h1>Selamat Ulang Tahun Putri ke-23! 🥳🎂</h1>
   <p>Meskipun kamu nggak pernah tanya kabarku, nggak apa-apa kok hehe 😆<br>
-     Semoga hari ulang tahunmu penuh tawa dan kue 🎂🎈</p>
+     Semoga hari ulang tahunmu penuh tawa dan kado yak🎈</p>
   <button class="button" id="btnUcapan">Klik untuk Ucapan</button>
   <div class="photo-slideshow" id="photoSlideshow"></div>
 </div>
 
 <div class="cake" onclick="explodeCake()">🎂</div>
 
-<audio id="music" src="jamrud-selamat-ulang-tahun.mp3" loop autoplay></audio>
+<div class="popup" id="popupUcapan">
+  <p>Semoga kamu bahagia terus ya :), doa terbaik dari aku<br>Your Ex<br>See you my favorite stranger</p>
+  <button onclick="closePopup()">Tutup</button>
+</div>
+
+<audio id="music" src="jamrud-selamat-ulang-tahun.mp3" loop></audio>
 
 <script>
 const music = document.getElementById('music');
 const btnUcapan = document.getElementById('btnUcapan');
+const popup = document.getElementById('popupUcapan');
+let musicPlayed = false;
 
-// Tombol klik ucapan: hanya menampilkan ucapan
+function playMusicOnce() {
+  if(!musicPlayed){
+    music.play().catch(e => console.log("Klik halaman untuk mulai musik"));
+    musicPlayed = true;
+  }
+}
+
+// Tombol klik ucapan -> play musik + tampilkan popup
 btnUcapan.addEventListener('click', () => {
-  alert("Semoga kamu bahagia terus ya, doa terbaik dari aku\n\nYour Ex\n\nSee you my favorite stranger");
+  playMusicOnce();
+  popup.classList.add('show');
 });
 
-// Slideshow foto 1-23 berjalan otomatis
+// Klik di body -> play musik sekali saja
+document.body.addEventListener('click', playMusicOnce, { once:true });
+
+function closePopup() {
+  popup.classList.remove('show');
+}
+
+// Slideshow foto 1-23 otomatis
 const slideshowContainer = document.getElementById('photoSlideshow');
 const totalPhotos = 23;
 const slides = [];
-for(let i=1; i<=totalPhotos; i++){
+for(let i=1;i<=totalPhotos;i++){
   const img = document.createElement('img');
   img.src = `foto${i}.jpg`;
   slideshowContainer.appendChild(img);
   slides.push(img);
 }
-let current = 0;
+let current=0;
 slides[current].classList.add('active');
-
-function showNextPhoto() {
+function showNextPhoto(){
   slides[current].classList.remove('active');
-  current = (current + 1) % totalPhotos;
+  current=(current+1)%totalPhotos;
   slides[current].classList.add('active');
 }
+setInterval(showNextPhoto,3000);
 
-setInterval(showNextPhoto, 3000);
-
-// Efek balon, confetti, teks lucu
-function createBalloon() {
-  const balloon = document.createElement('div');
+// Balon, confetti, teks lucu
+function createBalloon(){
+  const balloon=document.createElement('div');
   balloon.classList.add('balloon');
-  balloon.style.left = Math.random()*window.innerWidth+'px';
-  balloon.style.backgroundColor = `hsla(${Math.random()*360},70%,80%,0.5)`;
-  balloon.style.animationDuration = 6 + Math.random()*4 + 's';
+  balloon.style.left=Math.random()*window.innerWidth+'px';
+  balloon.style.backgroundColor=`hsla(${Math.random()*360},70%,80%,0.5)`;
+  balloon.style.animationDuration=6+Math.random()*4+'s';
   document.body.appendChild(balloon);
-  setTimeout(()=> balloon.remove(),12000);
+  setTimeout(()=>balloon.remove(),12000);
 }
-
-function createConfetti() {
-  const confetti = document.createElement('div');
+function createConfetti(){
+  const confetti=document.createElement('div');
   confetti.classList.add('confetti');
-  confetti.style.left = Math.random()*window.innerWidth+'px';
-  confetti.style.backgroundColor = `hsla(${Math.random()*360},80%,75%,0.7)`;
-  confetti.style.animationDuration = 3 + Math.random()*3 + 's';
+  confetti.style.left=Math.random()*window.innerWidth+'px';
+  confetti.style.backgroundColor=`hsla(${Math.random()*360},80%,75%,0.7)`;
+  confetti.style.animationDuration=3+Math.random()*3+'s';
   document.body.appendChild(confetti);
-  setTimeout(()=> confetti.remove(),7000);
+  setTimeout(()=>confetti.remove(),7000);
 }
-
-function createFunText() {
-  const texts = ["Yay! 🎉","Nikmati harimu 😆","Cake time! 🍰","Balon terbang! 🎈"];
-  const div = document.createElement('div');
+function createFunText(){
+  const texts=["Yay! 🎉","Nikmati harimu 😆","Cake time! 🍰","Balon terbang! 🎈"];
+  const div=document.createElement('div');
   div.classList.add('fun-text');
-  div.innerText = texts[Math.floor(Math.random()*texts.length)];
-  div.style.left = Math.random()*(window.innerWidth-120)+'px';
-  div.style.top = Math.random()*180+'px';
+  div.innerText=texts[Math.floor(Math.random()*texts.length)];
+  div.style.left=Math.random()*(window.innerWidth-120)+'px';
+  div.style.top=Math.random()*180+'px';
   document.body.appendChild(div);
-  setTimeout(()=> div.remove(),4000);
+  setTimeout(()=>div.remove(),4000);
 }
-
-function explodeCake() {
+function explodeCake(){
   for(let i=0;i<25;i++){
     createConfetti();
     createFunText();
   }
 }
-
 setInterval(createBalloon,900);
 setInterval(createConfetti,250);
 setInterval(createFunText,3000);
