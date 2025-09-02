@@ -3,137 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Selamat Ulang Tahun Putri ke-23!</title>
+<title>Ucapan Selamat Ulang Tahun Putri ke-23!</title>
 <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5, #ffe6cc);
-    overflow: hidden;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 50px;
-  }
-
-  .card {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 25px;
-    border-radius: 30px;
-    box-shadow: 0 15px 30px rgba(255, 105, 145, 0.2);
-    max-width: 500px;
-    text-align: center;
-    z-index: 10;
-    position: relative;
-    cursor: pointer; /* klik card untuk autoplay musik */
-  }
-
-  h1 {
-    font-family: 'Patrick Hand', cursive;
-    font-size: 2.2rem;
-    margin-bottom: 15px;
-    color: #ff6f91;
-  }
-
-  p {
-    font-size: 1.1rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    color: #555;
-  }
-
-  .button {
-    padding: 10px 22px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 14px;
-    background-color: #ff8fb1;
-    color: white;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-
-  .button:hover {
-    background-color: #ff5a8d;
-  }
-
-  .photo-slideshow {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-    position: relative;
-    height: 180px;
-  }
-
-  .photo-slideshow img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    position: absolute;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    border: 4px solid #ff6f91;
-  }
-
-  .photo-slideshow img.active {
-    opacity: 1;
-  }
-
-  .cake {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 80px;
-    height: 80px;
-    background: #ffe6cc;
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    color: #ff6f91;
-    cursor: pointer;
-    animation: bounce 1s infinite alternate;
-    z-index: 15;
-  }
-
-  @keyframes bounce {
-    0% { transform: translateY(0);}
-    100% { transform: translateY(-12px);}
-  }
-
-  .fun-text {
-    position: absolute;
-    font-family: 'Patrick Hand', cursive;
-    font-size: 1.1rem;
-    color: #ff6f91;
-    animation: floatText 4s ease-in-out infinite;
-    z-index: 20;
-  }
-
-  @keyframes floatText {
-    0% { transform: translateY(0);}
-    50% { transform: translateY(-15px);}
-    100% { transform: translateY(0);}
-  }
+body {
+  margin:0; padding:0;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #ffe6f0, #fff0f5, #ffe6cc);
+  overflow:hidden;
+  color:#333;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding-top:50px;
+}
+.card {
+  background: rgba(255,255,255,0.95);
+  padding:25px;
+  border-radius:30px;
+  box-shadow:0 15px 30px rgba(255,105,145,0.2);
+  max-width:500px;
+  text-align:center;
+  z-index:10;
+  position:relative;
+  cursor:pointer;
+}
+h1 { font-family:'Patrick Hand', cursive; font-size:2.2rem; margin-bottom:15px; color:#ff6f91;}
+p { font-size:1.1rem; line-height:1.5; margin-bottom:20px; color:#555;}
+.button {
+  padding:10px 22px; font-size:1rem; border:none;
+  border-radius:14px; background-color:#ff8fb1; color:white;
+  cursor:pointer; margin-bottom:20px;
+}
+.button:hover { background-color:#ff5a8d; }
+.photo-slideshow {
+  display:flex; justify-content:center; margin-top:15px;
+  position:relative; height:180px;
+}
+.photo-slideshow img {
+  width:150px; height:150px;
+  border-radius:50%; object-fit:cover;
+  position:absolute; opacity:0;
+  transition: opacity 1s ease-in-out;
+  border:4px solid #ff6f91;
+}
+.photo-slideshow img.active { opacity:1; }
+.cake {
+  position:absolute; bottom:20px; right:20px;
+  width:80px; height:80px;
+  background:#ffe6cc; border-radius:12px;
+  display:flex; justify-content:center; align-items:center;
+  font-size:2rem; color:#ff6f91; cursor:pointer;
+  animation:bounce 1s infinite alternate; z-index:15;
+}
+@keyframes bounce { 0% {transform:translateY(0);} 100% {transform:translateY(-12px);} }
+.fun-text {
+  position:absolute; font-family:'Patrick Hand', cursive;
+  font-size:1.1rem; color:#ff6f91;
+  animation:floatText 4s ease-in-out infinite; z-index:20;
+}
+@keyframes floatText {
+  0% {transform:translateY(0);} 50% {transform:translateY(-15px);} 100% {transform:translateY(0);}
+}
+.balloon, .confetti {
+  position:absolute; pointer-events:none; z-index:5;
+}
+.balloon { width:15px; height:20px; border-radius:50%; }
+.confetti { width:8px; height:8px; border-radius:2px; }
 </style>
 </head>
 <body>
 
 <div class="card" id="card">
-  <h1>Selamat Ulang Tahun Putri ke-23 Tahun yah 🥳!</h1>
-  <p>Meskipun kamu nggak pernah nanya kabar aku, nggak apa-apa kok, hehe 😆<br>
-     Semoga hari ulang tahunmu penuh tawa, kebahagiaan, dan semua doa baik terkabul Amiin.🎉<br>
-   <p>
+  <h1>Selamat Ulang Tahun Putri ke-23! 🥳🎂</h1>
+  <p>Meskipun kamu nggak pernah tanya kabarku, nggak apa-apa kok hehe 😆<br>
+     Semoga hari ulang tahunmu penuh tawa dan kado yak  🎈</p>
   <button class="button" onclick="showMessage()">Klik untuk Ucapan</button>
-
-  <div class="photo-slideshow" id="photoSlideshow">
-    <!-- foto1 sampai foto23 akan dimasukkan via JS -->
-  </div>
+  <div class="photo-slideshow" id="photoSlideshow"></div>
 </div>
 
 <div class="cake" onclick="explodeCake()">🎂</div>
@@ -141,85 +87,83 @@
 <audio id="music" src="jamrud-selamat-ulang-tahun.mp3" loop></audio>
 
 <script>
-  const music = document.getElementById('music');
-  const card = document.getElementById('card');
+const music = document.getElementById('music');
+const card = document.getElementById('card');
 
-  // Musik autoplay setelah klik card pertama
-  let musicPlayed = false;
-  card.addEventListener('click', () => {
-    if(!musicPlayed){
-      music.play();
-      musicPlayed = true;
-    }
-  });
-
-  function showMessage() {
-    alert("Doa terbaik buat kamu pokok yah ,kita bisa jadi temen kan? , dari Your Ex. ");
+// Musik autoplay setelah klik card pertama
+let musicPlayed = false;
+card.addEventListener('click', () => {
+  if(!musicPlayed){
+    music.play();
+    musicPlayed = true;
   }
+});
 
-  // Slideshow foto 1-23
-  const slideshowContainer = document.getElementById('photoSlideshow');
-  const totalPhotos = 23;
-  const slides = [];
+// Fungsi tombol klik ucapan
+function showMessage() {
+  alert("Semoga kamu bahagia terus ya, doa terbaik dari aku\n\nYour Ex\n\nSee you my favorite stranger");
+}
 
-  for(let i=1; i<=totalPhotos; i++){
-    const img = document.createElement('img');
-    img.src = `foto${i}.jpg`;
-    slideshowContainer.appendChild(img);
-    slides.push(img);
-  }
-
-  let current = 0;
+// Slideshow foto 1-23
+const slideshowContainer = document.getElementById('photoSlideshow');
+const totalPhotos = 23;
+const slides = [];
+for(let i=1;i<=totalPhotos;i++){
+  const img = document.createElement('img');
+  img.src = `foto${i}.jpg`;
+  slideshowContainer.appendChild(img);
+  slides.push(img);
+}
+let current = 0;
+slides[current].classList.add('active');
+setInterval(()=>{
+  slides[current].classList.remove('active');
+  current = (current + 1) % totalPhotos;
   slides[current].classList.add('active');
+}, 3000);
 
-  setInterval(() => {
-    slides[current].classList.remove('active');
-    current = (current + 1) % totalPhotos;
-    slides[current].classList.add('active');
-  }, 3000);
+// Efek balon, confetti, teks lucu
+function createBalloon() {
+  const balloon = document.createElement('div');
+  balloon.classList.add('balloon');
+  balloon.style.left = Math.random()*window.innerWidth+'px';
+  balloon.style.backgroundColor = `hsla(${Math.random()*360},70%,80%,0.5)`;
+  balloon.style.animationDuration = 6 + Math.random()*4 + 's';
+  document.body.appendChild(balloon);
+  setTimeout(()=> balloon.remove(),12000);
+}
 
-  // BALON, CONFETTI, TEKS LUCU
-  function createBalloon() {
-    const balloon = document.createElement('div');
-    balloon.classList.add('balloon');
-    balloon.style.left = Math.random() * window.innerWidth + 'px';
-    balloon.style.backgroundColor = `hsla(${Math.random() * 360},70%,80%,0.5)`;
-    balloon.style.animationDuration = 6 + Math.random() * 4 + 's';
-    document.body.appendChild(balloon);
-    setTimeout(()=> balloon.remove(),12000);
+function createConfetti() {
+  const confetti = document.createElement('div');
+  confetti.classList.add('confetti');
+  confetti.style.left = Math.random()*window.innerWidth+'px';
+  confetti.style.backgroundColor = `hsla(${Math.random()*360},80%,75%,0.7)`;
+  confetti.style.animationDuration = 3 + Math.random()*3 + 's';
+  document.body.appendChild(confetti);
+  setTimeout(()=> confetti.remove(),7000);
+}
+
+function createFunText() {
+  const texts = ["Yay! 🎉","Nikmati harimu 😆","Cake time! 🍰","Balon terbang! 🎈"];
+  const div = document.createElement('div');
+  div.classList.add('fun-text');
+  div.innerText = texts[Math.floor(Math.random()*texts.length)];
+  div.style.left = Math.random()*(window.innerWidth-120)+'px';
+  div.style.top = Math.random()*180+'px';
+  document.body.appendChild(div);
+  setTimeout(()=> div.remove(),4000);
+}
+
+function explodeCake() {
+  for(let i=0;i<25;i++){
+    createConfetti();
+    createFunText();
   }
+}
 
-  function createConfetti() {
-    const confetti = document.createElement('div');
-    confetti.classList.add('confetti');
-    confetti.style.left = Math.random() * window.innerWidth + 'px';
-    confetti.style.backgroundColor = `hsla(${Math.random()*360},80%,75%,0.7)`;
-    confetti.style.animationDuration = 3 + Math.random()*3 + 's';
-    document.body.appendChild(confetti);
-    setTimeout(()=> confetti.remove(),7000);
-  }
-
-  function createFunText() {
-    const texts = ["Yay! 🎉", "Nikmati harimu 😆", "Cake time! 🍰", "Balon terbang! 🎈"];
-    const div = document.createElement('div');
-    div.classList.add('fun-text');
-    div.innerText = texts[Math.floor(Math.random()*texts.length)];
-    div.style.left = Math.random()*(window.innerWidth-120)+'px';
-    div.style.top = Math.random()*180+'px';
-    document.body.appendChild(div);
-    setTimeout(()=> div.remove(),4000);
-  }
-
-  function explodeCake() {
-    for(let i=0;i<25;i++){
-      createConfetti();
-      createFunText();
-    }
-  }
-
-  setInterval(createBalloon, 900);
-  setInterval(createConfetti, 250);
-  setInterval(createFunText, 3000);
+setInterval(createBalloon,900);
+setInterval(createConfetti,250);
+setInterval(createFunText,3000);
 </script>
 </body>
 </html>
