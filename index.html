@@ -10,19 +10,19 @@
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to bottom, #ffecd2, #fcb69f);
+    background: #fff0f5;
     overflow: hidden;
-    text-align: center;
     color: #333;
   }
 
+  /* SLIDESHOW BACKGROUND */
   .slideshow {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 0;
     overflow: hidden;
   }
 
@@ -33,72 +33,72 @@
     background-size: cover;
     background-position: center;
     opacity: 0;
-    transition: opacity 2s ease-in-out;
+    transition: opacity 3s ease-in-out;
+    filter: blur(2px) brightness(0.8);
   }
 
   .slide.active {
     opacity: 1;
   }
 
+  /* CARD FEMININ */
   .card {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    max-width: 500px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 25px 25px 60px 25px;
+    border-radius: 30px;
+    box-shadow: 0 15px 30px rgba(255, 105, 145, 0.2);
+    max-width: 460px;
     position: relative;
     z-index: 10;
-    margin: auto;
-    top: 50px;
-    animation: fadeIn 1s ease-in-out, shake 1s infinite alternate;
+    margin: 60px auto 0;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
   }
 
   h1 {
     font-family: 'Patrick Hand', cursive;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #ff6f61;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    color: #ff6f91;
   }
 
   p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
     margin-bottom: 30px;
+    color: #555;
   }
 
   .button {
-    padding: 12px 25px;
+    padding: 10px 22px;
     font-size: 1rem;
     border: none;
-    border-radius: 10px;
-    background-color: #ff6f61;
+    border-radius: 14px;
+    background-color: #ff8fb1;
     color: white;
     cursor: pointer;
     transition: background 0.3s ease;
+    margin-bottom: 20px;
   }
 
   .button:hover {
-    background-color: #ff3b2f;
+    background-color: #ff5a8d;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px);}
+    from { opacity: 0; transform: translateY(-10px);}
     to { opacity: 1; transform: translateY(0);}
   }
 
-  @keyframes shake {
-    0% { transform: translateX(0); }
-    50% { transform: translateX(3px); }
-    100% { transform: translateX(-3px); }
-  }
-
-  /* BALON */
+  /* BALON TRANSPARAN */
   .balloon {
     position: absolute;
-    width: 40px;
-    height: 60px;
+    width: 35px;
+    height: 50px;
     border-radius: 50% 50% 50% 50%;
-    bottom: -80px;
+    bottom: -60px;
     animation: floatUp linear infinite;
+    opacity: 0.6;
   }
 
   @keyframes floatUp {
@@ -106,13 +106,13 @@
     100% { transform: translateY(-120vh) rotate(360deg);}
   }
 
-  /* CONFETTI */
+  /* CONFETTI LEMBUT */
   .confetti {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    opacity: 0.9;
+    opacity: 0.7;
     animation: confettiFall linear infinite;
   }
 
@@ -121,21 +121,20 @@
     100% { transform: translateY(100vh) rotate(360deg);}
   }
 
-  /* KUE ULTAH */
+  /* KUE */
   .cake {
     position: absolute;
     bottom: 20px;
     right: 20px;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     background: #ffe6cc;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
-    color: #ff6f61;
+    color: #ff6f91;
     cursor: pointer;
     animation: bounce 1s infinite alternate;
     z-index: 15;
@@ -143,24 +142,35 @@
 
   @keyframes bounce {
     0% { transform: translateY(0);}
-    100% { transform: translateY(-15px);}
+    100% { transform: translateY(-12px);}
   }
 
-  /* TEKS LUCU */
+  /* TEKS LUCU ELEGANT */
   .fun-text {
     position: absolute;
     font-family: 'Patrick Hand', cursive;
-    font-size: 1.2rem;
-    color: #ff6f61;
+    font-size: 1.1rem;
+    color: #ff6f91;
     animation: floatText 4s ease-in-out infinite;
     z-index: 20;
   }
 
   @keyframes floatText {
     0% { transform: translateY(0);}
-    50% { transform: translateY(-20px);}
+    50% { transform: translateY(-15px);}
     100% { transform: translateY(0);}
   }
+
+  /* FOTO PUTRI DI TENGAH BAWAH CARD */
+  .photo {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 20px;
+    border: 4px solid #ff6f91;
+  }
+
 </style>
 </head>
 <body>
@@ -171,8 +181,9 @@
   <h1>Selamat Ulang Tahun Putri ke-23!</h1>
   <p>Meskipun kamu nggak pernah nanya kabar aku, nggak apa-apa kok, hehe 😆<br>
      Semoga hari ulang tahunmu penuh tawa, kebahagiaan, dan semua doa baik terkabul. 🎉<br>
-     Semoga panjang umur, sehat selalu, rezeki lancar, dan selalu dikelilingi orang yang menyenangkan. ❤️</p>
+     Panjang umur, sehat selalu, rezeki lancar, dan selalu dikelilingi orang yang menyenangkan. </p>
   <button class="button" onclick="showMessage()">Klik untuk Ucapan</button>
+  <img src="foto1.jpg" alt="Putri" class="photo">
 </div>
 
 <div class="cake" onclick="explodeCake()">🎂</div>
@@ -189,10 +200,10 @@
     const balloon = document.createElement('div');
     balloon.classList.add('balloon');
     balloon.style.left = Math.random() * window.innerWidth + 'px';
-    balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
-    balloon.style.animationDuration = 5 + Math.random() * 5 + 's';
+    balloon.style.backgroundColor = `hsla(${Math.random() * 360}, 70%, 80%, 0.5)`;
+    balloon.style.animationDuration = 6 + Math.random() * 4 + 's';
     document.body.appendChild(balloon);
-    setTimeout(() => balloon.remove(), 10000);
+    setTimeout(() => balloon.remove(), 12000);
   }
 
   // CONFETTI
@@ -200,10 +211,10 @@
     const confetti = document.createElement('div');
     confetti.classList.add('confetti');
     confetti.style.left = Math.random() * window.innerWidth + 'px';
-    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 70%)`;
+    confetti.style.backgroundColor = `hsla(${Math.random() * 360}, 80%, 75%, 0.7)`;
     confetti.style.animationDuration = 3 + Math.random() * 3 + 's';
     document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 6000);
+    setTimeout(() => confetti.remove(), 7000);
   }
 
   // TEKS LUCU
@@ -212,23 +223,23 @@
     const textDiv = document.createElement('div');
     textDiv.classList.add('fun-text');
     textDiv.innerText = texts[Math.floor(Math.random() * texts.length)];
-    textDiv.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-    textDiv.style.top = Math.random() * 200 + 'px';
+    textDiv.style.left = Math.random() * (window.innerWidth - 120) + 'px';
+    textDiv.style.top = Math.random() * 180 + 'px';
     document.body.appendChild(textDiv);
     setTimeout(() => textDiv.remove(), 4000);
   }
 
   // MELEDAK KUE
   function explodeCake() {
-    for(let i =0; i<30; i++){
+    for(let i =0; i<25; i++){
       createConfetti();
       createFunText();
     }
   }
 
-  // Interval balon, confetti, teks lucu
-  setInterval(createBalloon, 700);
-  setInterval(createConfetti, 150);
+  // INTERVAL BALON, CONFETTI, TEKS
+  setInterval(createBalloon, 900);
+  setInterval(createConfetti, 250);
   setInterval(createFunText, 3000);
 
   // SLIDESHOW FOTO 1-23
@@ -251,7 +262,7 @@
     slides[currentSlide].classList.remove('active');
     currentSlide = (currentSlide +1) % totalSlides;
     slides[currentSlide].classList.add('active');
-  }, 5000); // 5 detik per slide
+  }, 5000);
 
 </script>
 </body>
