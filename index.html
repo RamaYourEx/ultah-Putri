@@ -13,20 +13,22 @@
     background: linear-gradient(135deg, #ffe6f0, #fff0f5, #ffe6cc);
     overflow: hidden;
     color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 50px;
   }
 
-  /* CARD FEMININ */
   .card {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 25px 25px 60px 25px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
     border-radius: 30px;
     box-shadow: 0 15px 30px rgba(255, 105, 145, 0.2);
-    max-width: 460px;
-    position: relative;
-    z-index: 10;
-    margin: 60px auto 0;
+    max-width: 500px;
     text-align: center;
-    animation: fadeIn 1s ease-in-out;
+    z-index: 10;
+    position: relative;
+    cursor: pointer; /* klik card untuk autoplay musik */
   }
 
   h1 {
@@ -39,7 +41,7 @@
   p {
     font-size: 1.1rem;
     line-height: 1.5;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     color: #555;
   }
 
@@ -51,7 +53,6 @@
     background-color: #ff8fb1;
     color: white;
     cursor: pointer;
-    transition: background 0.3s ease;
     margin-bottom: 20px;
   }
 
@@ -59,43 +60,29 @@
     background-color: #ff5a8d;
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px);}
-    to { opacity: 1; transform: translateY(0);}
+  .photo-slideshow {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    position: relative;
+    height: 180px;
   }
 
-  /* BALON TRANSPARAN */
-  .balloon {
-    position: absolute;
-    width: 35px;
-    height: 50px;
-    border-radius: 50% 50% 50% 50%;
-    bottom: -60px;
-    animation: floatUp linear infinite;
-    opacity: 0.6;
-  }
-
-  @keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg);}
-    100% { transform: translateY(-120vh) rotate(360deg);}
-  }
-
-  /* CONFETTI LEMBUT */
-  .confetti {
-    position: absolute;
-    width: 8px;
-    height: 8px;
+  .photo-slideshow img {
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
-    opacity: 0.7;
-    animation: confettiFall linear infinite;
+    object-fit: cover;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    border: 4px solid #ff6f91;
   }
 
-  @keyframes confettiFall {
-    0% { transform: translateY(-10px) rotate(0deg);}
-    100% { transform: translateY(100vh) rotate(360deg);}
+  .photo-slideshow img.active {
+    opacity: 1;
   }
 
-  /* KUE */
   .cake {
     position: absolute;
     bottom: 20px;
@@ -119,7 +106,6 @@
     100% { transform: translateY(-12px);}
   }
 
-  /* TEKS LUCU ELEGANT */
   .fun-text {
     position: absolute;
     font-family: 'Patrick Hand', cursive;
@@ -134,87 +120,106 @@
     50% { transform: translateY(-15px);}
     100% { transform: translateY(0);}
   }
-
-  /* FOTO PUTRI DI TENGAH BAWAH CARD */
-  .photo {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-top: 20px;
-    border: 4px solid #ff6f91;
-  }
-
 </style>
 </head>
 <body>
 
-<div class="card">
+<div class="card" id="card">
   <h1>Selamat Ulang Tahun Putri ke-23!</h1>
   <p>Meskipun kamu nggak pernah nanya kabar aku, nggak apa-apa kok, hehe 😆<br>
      Semoga hari ulang tahunmu penuh tawa, kebahagiaan, dan semua doa baik terkabul. 🎉<br>
-     Panjang umur, sehat selalu, rezeki lancar, dan selalu dikelilingi orang yang menyenangkan. </p>
+     Panjang umur, sehat selalu, rezeki lancar, dan selalu dikelilingi orang yang menyenangkan. ❤️</p>
   <button class="button" onclick="showMessage()">Klik untuk Ucapan</button>
-  <img src="foto1.jpg" alt="Putri" class="photo">
+
+  <div class="photo-slideshow" id="photoSlideshow">
+    <!-- foto1 sampai foto23 akan dimasukkan via JS -->
+  </div>
 </div>
 
 <div class="cake" onclick="explodeCake()">🎂</div>
 
-<!-- Musik dari file root repo -->
-<audio id="music" src="./jamrud-selamat-ulang-tahun.mp3" autoplay loop></audio>
+<audio id="music" src="jamrud-selamat-ulang-tahun.mp3" loop></audio>
 
 <script>
+  const music = document.getElementById('music');
+  const card = document.getElementById('card');
+
+  // Musik autoplay setelah klik card pertama
+  let musicPlayed = false;
+  card.addEventListener('click', () => {
+    if(!musicPlayed){
+      music.play();
+      musicPlayed = true;
+    }
+  });
+
   function showMessage() {
     alert("Selamat ulang tahun Putri! Semoga semua yang terbaik selalu menyertaimu! 🥳");
   }
 
-  // BALON
+  // Slideshow foto 1-23
+  const slideshowContainer = document.getElementById('photoSlideshow');
+  const totalPhotos = 23;
+  const slides = [];
+
+  for(let i=1; i<=totalPhotos; i++){
+    const img = document.createElement('img');
+    img.src = `foto${i}.jpg`;
+    slideshowContainer.appendChild(img);
+    slides.push(img);
+  }
+
+  let current = 0;
+  slides[current].classList.add('active');
+
+  setInterval(() => {
+    slides[current].classList.remove('active');
+    current = (current + 1) % totalPhotos;
+    slides[current].classList.add('active');
+  }, 3000);
+
+  // BALON, CONFETTI, TEKS LUCU
   function createBalloon() {
     const balloon = document.createElement('div');
     balloon.classList.add('balloon');
     balloon.style.left = Math.random() * window.innerWidth + 'px';
-    balloon.style.backgroundColor = `hsla(${Math.random() * 360}, 70%, 80%, 0.5)`;
+    balloon.style.backgroundColor = `hsla(${Math.random() * 360},70%,80%,0.5)`;
     balloon.style.animationDuration = 6 + Math.random() * 4 + 's';
     document.body.appendChild(balloon);
-    setTimeout(() => balloon.remove(), 12000);
+    setTimeout(()=> balloon.remove(),12000);
   }
 
-  // CONFETTI
   function createConfetti() {
     const confetti = document.createElement('div');
     confetti.classList.add('confetti');
     confetti.style.left = Math.random() * window.innerWidth + 'px';
-    confetti.style.backgroundColor = `hsla(${Math.random() * 360}, 80%, 75%, 0.7)`;
-    confetti.style.animationDuration = 3 + Math.random() * 3 + 's';
+    confetti.style.backgroundColor = `hsla(${Math.random()*360},80%,75%,0.7)`;
+    confetti.style.animationDuration = 3 + Math.random()*3 + 's';
     document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 7000);
+    setTimeout(()=> confetti.remove(),7000);
   }
 
-  // TEKS LUCU
   function createFunText() {
     const texts = ["Yay! 🎉", "Nikmati harimu 😆", "Cake time! 🍰", "Balon terbang! 🎈"];
-    const textDiv = document.createElement('div');
-    textDiv.classList.add('fun-text');
-    textDiv.innerText = texts[Math.floor(Math.random() * texts.length)];
-    textDiv.style.left = Math.random() * (window.innerWidth - 120) + 'px';
-    textDiv.style.top = Math.random() * 180 + 'px';
-    document.body.appendChild(textDiv);
-    setTimeout(() => textDiv.remove(), 4000);
+    const div = document.createElement('div');
+    div.classList.add('fun-text');
+    div.innerText = texts[Math.floor(Math.random()*texts.length)];
+    div.style.left = Math.random()*(window.innerWidth-120)+'px';
+    div.style.top = Math.random()*180+'px';
+    document.body.appendChild(div);
+    setTimeout(()=> div.remove(),4000);
   }
 
-  // MELEDAK KUE
   function explodeCake() {
-    for(let i =0; i<25; i++){
+    for(let i=0;i<25;i++){
       createConfetti();
       createFunText();
     }
   }
 
-  // INTERVAL BALON, CONFETTI, TEKS
   setInterval(createBalloon, 900);
   setInterval(createConfetti, 250);
   setInterval(createFunText, 3000);
-
 </script>
 </body>
 </html>
