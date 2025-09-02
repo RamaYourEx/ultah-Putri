@@ -3,201 +3,256 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Selamat Ulang Tahun Putri</title>
+<title>Selamat Ulang Tahun Putri ke-23!</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body {
-  font-family: "Poppins", "Segoe UI", Tahoma, sans-serif;
-  background: #fff0f5;
-  color: #555;
-  text-align: center;
-  padding: 40px 20px;
-}
-.card {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-  display: inline-block;
-  max-width: 600px;
-}
-h1 {
-  color: #d18ca0;
-  font-size: 28px;
-  margin-bottom: 15px;
-}
-#message-container p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #666;
-  min-height: 60px;
-  cursor: pointer;
-  transition: opacity 0.5s ease-in-out;
-}
-#message-container button {
-  padding: 5px 12px;
-  margin: 0 5px;
-  border: none;
-  border-radius: 5px;
-  background: rgba(209,140,160,0.8);
-  color: white;
-  cursor: pointer;
-}
-#message-container button:hover { background: rgba(209,140,160,0.9);}
-.slideshow {
-  margin: 25px 0;
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-  height: 300px;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
-  border-radius: 15px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-}
-.slideshow img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  transition: opacity 1.2s ease-in-out;
-}
-.slideshow img.active { opacity: 1; }
-#playBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px 18px;
-  font-size: 14px;
-  border: none;
-  border-radius: 25px;
-  background: rgba(209,140,160,0.8);
-  color: white;
-  cursor: pointer;
-  transition: background 0.3s;
-  z-index: 1000;
-}
-#playBtn:hover { background: rgba(209,140,160,0.9);}
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to bottom, #ffecd2, #fcb69f);
+    overflow: hidden;
+    text-align: center;
+    color: #333;
+  }
+
+  .slideshow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+  }
+
+  .slide.active {
+    opacity: 1;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    max-width: 500px;
+    position: relative;
+    z-index: 10;
+    margin: auto;
+    top: 50px;
+    animation: fadeIn 1s ease-in-out, shake 1s infinite alternate;
+  }
+
+  h1 {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ff6f61;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+
+  .button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff6f61;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .button:hover {
+    background-color: #ff3b2f;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
+    100% { transform: translateX(-3px); }
+  }
+
+  /* BALON */
+  .balloon {
+    position: absolute;
+    width: 40px;
+    height: 60px;
+    border-radius: 50% 50% 50% 50%;
+    bottom: -80px;
+    animation: floatUp linear infinite;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg);}
+    100% { transform: translateY(-120vh) rotate(360deg);}
+  }
+
+  /* CONFETTI */
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0.9;
+    animation: confettiFall linear infinite;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(-10px) rotate(0deg);}
+    100% { transform: translateY(100vh) rotate(360deg);}
+  }
+
+  /* KUE ULTAH */
+  .cake {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    background: #ffe6cc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: #ff6f61;
+    cursor: pointer;
+    animation: bounce 1s infinite alternate;
+    z-index: 15;
+  }
+
+  @keyframes bounce {
+    0% { transform: translateY(0);}
+    100% { transform: translateY(-15px);}
+  }
+
+  /* TEKS LUCU */
+  .fun-text {
+    position: absolute;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.2rem;
+    color: #ff6f61;
+    animation: floatText 4s ease-in-out infinite;
+    z-index: 20;
+  }
+
+  @keyframes floatText {
+    0% { transform: translateY(0);}
+    50% { transform: translateY(-20px);}
+    100% { transform: translateY(0);}
+  }
 </style>
 </head>
 <body>
 
+<div class="slideshow"></div>
+
 <div class="card">
-  <h1>Selamat Ulang Tahun, Putri yang Ke 23 Tahun 🎉🥳🎂</h1>
-
-  <div id="message-container" style="text-align:center; margin-top:20px;">
-    <p id="message">Klik di sini untuk memulai ucapan</p>
-    <div id="buttons" style="margin-top:10px; display:none;">
-      <button id="prevBtn" disabled>◀ Sebelumnya</button>
-      <button id="nextBtn" disabled>Berikutnya ▶</button>
-    </div>
-  </div>
-
-  <div class="slideshow" id="slideshow"></div>
+  <h1>Selamat Ulang Tahun Putri ke-23!</h1>
+  <p>Meskipun kamu nggak pernah nanya kabar aku, nggak apa-apa kok, hehe 😆<br>
+     Semoga hari ulang tahunmu penuh tawa, kebahagiaan, dan semua doa baik terkabul. 🎉<br>
+     Semoga panjang umur, sehat selalu, rezeki lancar, dan selalu dikelilingi orang yang menyenangkan. ❤️</p>
+  <button class="button" onclick="showMessage()">Klik untuk Ucapan</button>
 </div>
 
-<button id="playBtn" onclick="playMusic()">▶️ Putar Musik</button>
+<div class="cake" onclick="explodeCake()">🎂</div>
 
-<audio id="music" loop autoplay muted>
-  <source src="jamrud-selamat-ulang-tahun.mp3" type="audio/mpeg">
-  Browser kamu tidak mendukung audio.
-</audio>
+<audio id="music" src="jamrud-selamat-ulang-tahun.mp3" autoplay loop></audio>
 
 <script>
-// Slideshow 23 foto
-const photos = [];
-for(let i=1;i<=23;i++){
-  photos.push(`foto${i}.jpg`);
-}
-const slideshowDiv = document.getElementById('slideshow');
-photos.forEach((photo,index)=>{
-  const img = document.createElement('img');
-  img.src = photo;
-  if(index===0) img.classList.add('active');
-  slideshowDiv.appendChild(img);
-});
-let slideIndex = 0;
-const slides = document.querySelectorAll(".slideshow img");
-setInterval(()=>{
-  slides[slideIndex].classList.remove("active");
-  slideIndex = (slideIndex+1) % slides.length;
-  slides[slideIndex].classList.add("active");
-},3000);
-
-// Musik
-const music = document.getElementById("music");
-function playMusic(){
-  music.muted=false;
-  music.volume=0.6;
-  music.play();
-}
-window.addEventListener('load',()=>{
-  music.muted=false;
-  music.volume=0.6;
-  music.play().catch(()=>{});
-});
-document.body.addEventListener('click',()=>{
-  if(music.paused){
-    music.muted=false;
-    music.play().catch(()=>{});
-  }
-});
-
-// Ucapan dengan klik awal → tombol + efek fade
-const allMessages = [
-  "Meski kamu gak pernah tanya kabar aku gpp,",
-  "aku tetap mendoakan yang terbaik untuk kmu.",
-  "Semoga sehat selalu, panjang umur yah.",
-  "See you, my favorite stranger."
-];
-
-const msgElem = document.getElementById("message");
-const buttonsDiv = document.getElementById("buttons");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-
-msgElem.addEventListener('click', ()=>{
-  let idx = 0;
-  msgElem.style.cursor = 'default';
-  buttonsDiv.style.display = 'block';
-
-  // Tampilkan kalimat pertama dengan fade
-  function showMessage(index){
-    msgElem.style.opacity = 0;
-    setTimeout(()=>{
-      msgElem.innerHTML = allMessages[index];
-      msgElem.style.opacity = 1;
-    },200);
+  function showMessage() {
+    alert("Selamat ulang tahun Putri! Semoga semua yang terbaik selalu menyertaimu! 🥳");
   }
 
-  showMessage(idx);
-  prevBtn.disabled = true;
-  nextBtn.disabled = (allMessages.length <= 1);
+  // BALON
+  function createBalloon() {
+    const balloon = document.createElement('div');
+    balloon.classList.add('balloon');
+    balloon.style.left = Math.random() * window.innerWidth + 'px';
+    balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
+    balloon.style.animationDuration = 5 + Math.random() * 5 + 's';
+    document.body.appendChild(balloon);
+    setTimeout(() => balloon.remove(), 10000);
+  }
 
-  // Tombol next
-  nextBtn.addEventListener('click', ()=>{
-    if(idx < allMessages.length-1){
-      idx++;
-      showMessage(idx);
-      prevBtn.disabled = false;
-      nextBtn.disabled = (idx === allMessages.length-1);
-    }
-  });
+  // CONFETTI
+  function createConfetti() {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 70%)`;
+    confetti.style.animationDuration = 3 + Math.random() * 3 + 's';
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 6000);
+  }
 
-  // Tombol prev
-  prevBtn.addEventListener('click', ()=>{
-    if(idx > 0){
-      idx--;
-      showMessage(idx);
-      nextBtn.disabled = false;
-      prevBtn.disabled = (idx === 0);
+  // TEKS LUCU
+  function createFunText() {
+    const texts = ["Yay! 🎉", "Nikmati harimu 😆", "Cake time! 🍰", "Balon terbang! 🎈"];
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('fun-text');
+    textDiv.innerText = texts[Math.floor(Math.random() * texts.length)];
+    textDiv.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+    textDiv.style.top = Math.random() * 200 + 'px';
+    document.body.appendChild(textDiv);
+    setTimeout(() => textDiv.remove(), 4000);
+  }
+
+  // MELEDAK KUE
+  function explodeCake() {
+    for(let i =0; i<30; i++){
+      createConfetti();
+      createFunText();
     }
-  });
-});
+  }
+
+  // Interval balon, confetti, teks lucu
+  setInterval(createBalloon, 700);
+  setInterval(createConfetti, 150);
+  setInterval(createFunText, 3000);
+
+  // SLIDESHOW FOTO 1-23
+  const slideshow = document.querySelector('.slideshow');
+  const totalSlides = 23;
+  const slides = [];
+
+  for(let i=1; i<=totalSlides; i++){
+    const slide = document.createElement('div');
+    slide.classList.add('slide');
+    slide.style.backgroundImage = `url('foto${i}.jpg')`;
+    slideshow.appendChild(slide);
+    slides.push(slide);
+  }
+
+  let currentSlide = 0;
+  slides[currentSlide].classList.add('active');
+
+  setInterval(() => {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide +1) % totalSlides;
+    slides[currentSlide].classList.add('active');
+  }, 5000); // 5 detik per slide
+
 </script>
-
 </body>
 </html>
