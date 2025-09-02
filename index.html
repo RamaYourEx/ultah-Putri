@@ -26,7 +26,6 @@ body {
   text-align:center;
   z-index:10;
   position:relative;
-  cursor:pointer;
 }
 h1 { font-family:'Patrick Hand', cursive; font-size:2.2rem; margin-bottom:15px; color:#ff6f91;}
 p { font-size:1.1rem; line-height:1.5; margin-bottom:20px; color:#555;}
@@ -44,7 +43,7 @@ p { font-size:1.1rem; line-height:1.5; margin-bottom:20px; color:#555;}
   width:150px; height:150px;
   border-radius:50%; object-fit:cover;
   position:absolute; opacity:0;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 1.5s ease-in-out;
   border:4px solid #ff6f91;
 }
 .photo-slideshow img.active { opacity:1; }
@@ -75,40 +74,31 @@ p { font-size:1.1rem; line-height:1.5; margin-bottom:20px; color:#555;}
 <body>
 
 <div class="card" id="card">
-  <h1>Selamat Ulang Tahun Putri ke-23! 🥳🎂</h1>
+  <h1>Selamat Ulang Tahun Putri ke-23! 🥳</h1>
   <p>Meskipun kamu nggak pernah tanya kabarku, nggak apa-apa kok hehe 😆<br>
-     Semoga hari ulang tahunmu penuh tawa dan kado yak  🎈</p>
-  <button class="button" onclick="showMessage()">Klik untuk Ucapan</button>
+     Semoga hari ulang tahunmu penuh tawa dan kue 🎂🎈</p>
+  <button class="button" id="btnUcapan">Klik untuk Ucapan</button>
   <div class="photo-slideshow" id="photoSlideshow"></div>
 </div>
 
 <div class="cake" onclick="explodeCake()">🎂</div>
 
-<audio id="music" src="jamrud-selamat-ulang-tahun.mp3" loop></audio>
+<audio id="music" src="jamrud-selamat-ulang-tahun.mp3" loop autoplay></audio>
 
 <script>
 const music = document.getElementById('music');
-const card = document.getElementById('card');
+const btnUcapan = document.getElementById('btnUcapan');
 
-// Musik autoplay setelah klik card pertama
-let musicPlayed = false;
-card.addEventListener('click', () => {
-  if(!musicPlayed){
-    music.play();
-    musicPlayed = true;
-  }
+// Tombol klik ucapan: hanya menampilkan ucapan
+btnUcapan.addEventListener('click', () => {
+  alert("Semoga kamu bahagia terus ya, doa terbaik dari aku\n\nYour Ex\n\nSee you my favorite stranger");
 });
 
-// Fungsi tombol klik ucapan
-function showMessage() {
-  alert("Semoga kamu bahagia terus ya, doa terbaik dari aku\n\nYour Ex\n\nSee you my favorite stranger");
-}
-
-// Slideshow foto 1-23
+// Slideshow foto 1-23 berjalan otomatis
 const slideshowContainer = document.getElementById('photoSlideshow');
 const totalPhotos = 23;
 const slides = [];
-for(let i=1;i<=totalPhotos;i++){
+for(let i=1; i<=totalPhotos; i++){
   const img = document.createElement('img');
   img.src = `foto${i}.jpg`;
   slideshowContainer.appendChild(img);
@@ -116,11 +106,14 @@ for(let i=1;i<=totalPhotos;i++){
 }
 let current = 0;
 slides[current].classList.add('active');
-setInterval(()=>{
+
+function showNextPhoto() {
   slides[current].classList.remove('active');
   current = (current + 1) % totalPhotos;
   slides[current].classList.add('active');
-}, 3000);
+}
+
+setInterval(showNextPhoto, 3000);
 
 // Efek balon, confetti, teks lucu
 function createBalloon() {
