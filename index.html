@@ -65,22 +65,30 @@
     justify-content: center;
     margin-top: 15px;
     position: relative;
-    height: 180px;
+    height: 200px;
   }
 
-  .photo-slideshow img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
+  .frame {
+    width: 180px;
+    height: 180px;
+    background: url('gift-frame.png') center/cover no-repeat; /* frame kado */
     position: absolute;
     opacity: 0;
     transition: opacity 1s ease-in-out;
-    padding: 15px;
-    background: url('gift-frame.png') center/cover no-repeat; /* gunakan frame kado PNG transparan */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  .photo-slideshow img.active {
+  .frame.active {
     opacity: 1;
+  }
+
+  .frame img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px; /* biar fotonya rapi */
   }
 
   /* popup video */
@@ -154,25 +162,28 @@
     alert("Semoga kamu bahagia terus ya 😊\nDoa terbaik dari aku 💌\n\nYour Ex\nSee you my favorite stranger ✨");
   }
 
-  // Slideshow foto1 - foto23
+  // Slideshow foto1 - foto23 dengan frame kado
   const slideshowContainer = document.getElementById('photoSlideshow');
   const totalPhotos = 23;
-  const slides = [];
+  const frames = [];
 
   for (let i=1; i<=totalPhotos; i++) {
+    const frame = document.createElement('div');
+    frame.classList.add('frame');
     const img = document.createElement('img');
     img.src = `foto${i}.jpg`;
-    slideshowContainer.appendChild(img);
-    slides.push(img);
+    frame.appendChild(img);
+    slideshowContainer.appendChild(frame);
+    frames.push(frame);
   }
 
   let current = 0;
-  slides[current].classList.add('active');
+  frames[current].classList.add('active');
 
   setInterval(() => {
-    slides[current].classList.remove('active');
+    frames[current].classList.remove('active');
     current = (current + 1) % totalPhotos;
-    slides[current].classList.add('active');
+    frames[current].classList.add('active');
   }, 3000);
 
   // Popup video
