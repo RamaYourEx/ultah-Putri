@@ -17,6 +17,10 @@ body {
   align-items:flex-start;
   padding-top:50px;
   cursor:pointer;
+  transition: filter 0.4s ease-in-out;
+}
+body.blurred {
+  filter: blur(6px);
 }
 .card {
   background: rgba(255,255,255,0.95);
@@ -33,7 +37,7 @@ p { font-size:1.1rem; line-height:1.5; margin-bottom:20px; color:#555;}
 .button {
   padding:10px 22px; font-size:1rem; border:none;
   border-radius:14px; background-color:#ff8fb1; color:white;
-  cursor:pointer; margin-bottom:20px;
+  cursor:pointer; margin-bottom:20px; display:block; margin-left:auto; margin-right:auto;
 }
 .button:hover { background-color:#ff5a8d; }
 .photo-slideshow {
@@ -70,24 +74,29 @@ p { font-size:1.1rem; line-height:1.5; margin-bottom:20px; color:#555;}
 }
 .balloon { width:15px; height:20px; border-radius:50%; }
 .confetti { width:8px; height:8px; border-radius:2px; }
-/* Popup ucapan */
+
+/* Popup */
 .popup {
   position: fixed;
   top:50%; left:50%;
-  transform: translate(-50%, -50%) scale(0);
-  background: rgba(255,255,255,0.95);
+  transform: translate(-50%, -50%) scale(0.7);
+  background: rgba(255,255,255,0.97);
   border-radius:20px;
   padding:30px;
   box-shadow: 0 15px 40px rgba(255,105,145,0.3);
   text-align:center;
-  z-index:50;
-  transition: transform 0.4s ease-in-out;
+  z-index:100;
+  opacity:0;
   width: 90%;
-  max-width: 400px;
+  max-width: 420px;
   font-family: 'Patrick Hand', cursive;
   color:#ff6f91;
+  transition: all 0.4s ease-in-out;
 }
-.popup.show { transform: translate(-50%, -50%) scale(1); }
+.popup.show {
+  opacity:1;
+  transform: translate(-50%, -50%) scale(1);
+}
 .popup button {
   margin-top:20px;
   padding:8px 20px;
@@ -96,33 +105,47 @@ p { font-size:1.1rem; line-height:1.5; margin-bottom:20px; color:#555;}
   font-size:1rem;
 }
 .popup button:hover { background:#ff5a8d; }
+/* Video style */
+.popup video {
+  width:100%;
+  border-radius:12px;
+  margin-top:10px;
+}
 </style>
 </head>
 <body>
 
 <div class="card" id="card">
-  <h1>Selamat Ulang Tahun Putri ke-23! 🥳🎂</h1>
+  <h1>Selamat Ulang Tahun Putri ke-23! 🥳</h1>
   <p>Meskipun kamu nggak pernah tanya kabarku, nggak apa-apa kok hehe 😆<br>
-     Semoga hari ulang tahunmu penuh tawa dan kado yak🎈</p>
+     Semoga hari ulang tahunmu penuh tawa dan kue 🎂🎈</p>
+  
   <button class="button" id="btnUcapan">Klik untuk Ucapan</button>
+  <button class="button" id="btnTeman">Bolehkah kita jadi teman lagi?</button>
+
   <div class="photo-slideshow" id="photoSlideshow"></div>
 </div>
 
 <div class="cake" onclick="explodeCake()">🎂</div>
 
+<!-- Popup Ucapan -->
 <div class="popup" id="popupUcapan">
-  <p>Semoga kamu bahagia terus ya :), doa terbaik dari aku<br>Your Ex<br>See you my favorite stranger</p>
-  <button onclick="closePopup()">Tutup</button>
+  <p>Semoga kamu bahagia terus ya, doa terbaik dari aku<br><br>Your Ex<br><br>See you my favorite stranger</p>
+  <button onclick="closePopup('popupUcapan')">Tutup</button>
+</div>
+
+<!-- Popup Video -->
+<div class="popup" id="popupVideo">
+  <h3>Bolehkah kita jadi teman lagi? 😊</h3>
+  <video src="video.mp4" controls></video>
+  <button onclick="closePopup('popupVideo')">Tutup</button>
 </div>
 
 <audio id="music" src="jamrud-selamat-ulang-tahun.mp3" loop></audio>
 
 <script>
 const music = document.getElementById('music');
-const btnUcapan = document.getElementById('btnUcapan');
-const popup = document.getElementById('popupUcapan');
 let musicPlayed = false;
-
 function playMusicOnce() {
   if(!musicPlayed){
     music.play().catch(e => console.log("Klik halaman untuk mulai musik"));
@@ -130,20 +153,30 @@ function playMusicOnce() {
   }
 }
 
-// Tombol klik ucapan -> play musik + tampilkan popup
-btnUcapan.addEventListener('click', () => {
+// Tombol Ucapan
+document.getElementById('btnUcapan').addEventListener('click', () => {
   playMusicOnce();
-  popup.classList.add('show');
+  document.getElementById('popupUcapan').classList.add('show');
+  document.body.classList.add('blurred');
 });
 
-// Klik di body -> play musik sekali saja
-document.body.addEventListener('click', playMusicOnce, { once:true });
+// Tombol Teman
+document.getElementById('btnTeman').addEventListener('click', () => {
+  playMusicOnce();
+  document.getElementById('popupVideo').classList.add('show');
+  document.body.classList.add('blurred');
+});
 
-function closePopup() {
-  popup.classList.remove('show');
+// Tutup popup
+function closePopup(id){
+  document.getElementById(id).classList.remove('show');
+  document.body.classList.remove('blurred');
 }
 
-// Slideshow foto 1-23 otomatis
+// Klik body sekali => musik jalan
+document.body.addEventListener('click', playMusicOnce, { once:true });
+
+// Slideshow foto
 const slideshowContainer = document.getElementById('photoSlideshow');
 const totalPhotos = 23;
 const slides = [];
@@ -162,7 +195,7 @@ function showNextPhoto(){
 }
 setInterval(showNextPhoto,3000);
 
-// Balon, confetti, teks lucu
+// Efek balon, confetti, teks
 function createBalloon(){
   const balloon=document.createElement('div');
   balloon.classList.add('balloon');
