@@ -1,208 +1,299 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Selamat Ulang Tahun Putri ke-23!</title>
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #ffe6f0, #fff0f5, #ffe6cc);
-    overflow: hidden;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 50px;
-  }
-
-  .card {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 25px;
-    border-radius: 30px;
-    box-shadow: 0 15px 30px rgba(255, 105, 145, 0.2);
-    max-width: 520px;
-    text-align: center;
-    z-index: 10;
-    position: relative;
-  }
-
-  h1 {
-    font-family: 'Patrick Hand', cursive;
-    font-size: 2.2rem;
-    margin-bottom: 15px;
-    color: #ff6f91;
-  }
-
-  p {
-    font-size: 1.1rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    color: #555;
-  }
-
-  .button {
-    padding: 10px 22px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 14px;
-    background-color: #ff8fb1;
-    color: white;
-    cursor: pointer;
-    margin: 5px;
-  }
-
-  .button:hover {
-    background-color: #ff5a8d;
-  }
-
-  /* slideshow */
-  .photo-slideshow {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-    position: relative;
-    height: 200px;
-  }
-
-  .frame {
-    width: 180px;
-    height: 180px;
-    background: url('gift-frame.png') center/cover no-repeat; /* frame kado */
-    position: absolute;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .frame.active {
-    opacity: 1;
-  }
-
-  .frame img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 10px; /* biar fotonya rapi */
-  }
-
-  /* popup video */
-  .video-popup {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8);
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-  }
-  .video-popup video {
-    max-width: 90%;
-    max-height: 80%;
-    border-radius: 12px;
-  }
-  .video-popup .close {
-    position: absolute;
-    top: 20px; right: 20px;
-    background: #ff6f91;
-    border: none;
-    color: white;
-    padding: 10px 18px;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-</style>
-</head>
-<body>
-
-<div class="card" id="card">
-  <h1>Selamat Ulang Tahun Putri ke-23 Tahun yah 🥳!</h1>
-  <p>Semoga hari ulang tahunmu penuh tawa, kebahagiaan, dan semua doa baik terkabul. 🎉</p>
+<!DOCTYPE html>  
+<html lang="id">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Selamat Ulang Tahun Putri ke-23!</title>  
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Patrick+Hand&family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+<style>  
+  body {  
+    margin: 0;  
+    padding: 0;  
+    font-family: 'Roboto', sans-serif;  
+    background: linear-gradient(135deg, #fff0f5, #ffe6f0, #ffe6cc);  
+    overflow: hidden;  
+    color: #444;  
+    display: flex;  
+    justify-content: center;  
+    align-items: flex-start;  
+    padding-top: 50px;  
+  }  
   
-  <!-- Tombol ucapan -->
-  <button class="button" onclick="showMessage()">Klik Ucapan</button>
+  .card {  
+    background: rgba(255, 255, 255, 0.95);  
+    padding: 25px;  
+    border-radius: 30px;  
+    box-shadow: 0 15px 30px rgba(200, 120, 150, 0.25);  
+    max-width: 520px;  
+    text-align: center;  
+    z-index: 10;  
+    position: relative;  
+  }  
   
-  <!-- Tombol popup video -->
-  <button class="button" onclick="showVideo()">Bolehkah kita jadi teman lagi?</button>
-
-  <!-- slideshow foto -->
-  <div class="photo-slideshow" id="photoSlideshow"></div>
-</div>
-
-<audio id="music" src="jamrud-selamat-ulang-tahun.mp3" loop></audio>
-
-<!-- popup video -->
-<div class="video-popup" id="videoPopup">
-  <button class="close" onclick="closeVideo()">Tutup</button>
-  <video id="videoPlayer" controls>
-    <source src="video.mp4" type="video/mp4">
-    Browser kamu tidak mendukung video.
-  </video>
-</div>
-
-<script>
-  const music = document.getElementById('music');
-  let musicPlayed = false;
-
-  // Musik play saat klik halaman
-  document.body.addEventListener('click', () => {
-    if (!musicPlayed) {
-      music.play();
-      musicPlayed = true;
-    }
-  });
-
-  function showMessage() {
-    alert("Semoga kamu bahagia terus ya 😊\nDoa terbaik dari aku 💌\n\nYour Ex\nSee you my favorite stranger ✨");
-  }
-
-  // Slideshow foto1 - foto23 dengan frame kado
-  const slideshowContainer = document.getElementById('photoSlideshow');
-  const totalPhotos = 23;
-  const frames = [];
-
-  for (let i=1; i<=totalPhotos; i++) {
-    const frame = document.createElement('div');
-    frame.classList.add('frame');
-    const img = document.createElement('img');
-    img.src = `foto${i}.jpg`;
-    frame.appendChild(img);
-    slideshowContainer.appendChild(frame);
-    frames.push(frame);
-  }
-
-  let current = 0;
-  frames[current].classList.add('active');
-
-  setInterval(() => {
-    frames[current].classList.remove('active');
-    current = (current + 1) % totalPhotos;
-    frames[current].classList.add('active');
-  }, 3000);
-
-  // Popup video
-  const videoPopup = document.getElementById('videoPopup');
-  const videoPlayer = document.getElementById('videoPlayer');
-
-  function showVideo() {
-    music.pause(); // stop musik
-    music.currentTime = 0;
-    videoPopup.style.display = 'flex';
-    videoPlayer.play();
-  }
-
-  function closeVideo() {
-    videoPopup.style.display = 'none';
-    videoPlayer.pause();
-    videoPlayer.currentTime = 0;
-  }
-</script>
-
-</body>
+  h1 {  
+    font-family: 'Sacramento', cursive;  
+    font-size: 2.5rem;  
+    margin-bottom: 15px;  
+    color: #e86a92;  
+  }  
+  
+  p {  
+    font-size: 1.1rem;  
+    line-height: 1.5;  
+    margin-bottom: 20px;  
+    color: #555;  
+  }  
+  
+  .button {  
+    padding: 10px 22px;  
+    font-size: 1rem;  
+    border: none;  
+    border-radius: 14px;  
+    background-color: #f7a8b8;  
+    color: white;  
+    cursor: pointer;  
+    margin: 5px;  
+    transition: 0.3s;  
+  }  
+  .button:hover {  
+    background-color: #e989a6;  
+  }  
+  
+  .photo-slideshow {  
+    display: flex;  
+    justify-content: center;  
+    margin-top: 15px;  
+    position: relative;  
+    height: 200px;  
+  }  
+  .frame {  
+    width: 180px;  
+    height: 180px;  
+    background: url('gift-frame.png') center/cover no-repeat;  
+    position: absolute;  
+    opacity: 0;  
+    transition: opacity 1s ease-in-out;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+  }  
+  .frame.active {  
+    opacity: 1;  
+  }  
+  .frame img {  
+    width: 120px;  
+    height: 120px;  
+    object-fit: cover;  
+    border-radius: 10px;  
+  }  
+  
+  /* kue animasi */  
+  .cake {  
+    position: fixed;  
+    bottom: 30px;  
+    left: 50%;  
+    transform: translateX(-50%);  
+    font-size: 3rem;  
+    cursor: pointer;  
+    animation: bounce 1s infinite alternate;  
+    z-index: 20;  
+  }  
+  @keyframes bounce {  
+    from { transform: translateX(-50%) translateY(0);}  
+    to { transform: translateX(-50%) translateY(-12px);}  
+  }  
+  
+  .fun-text {  
+    position: absolute;  
+    font-family: 'Patrick Hand', cursive;  
+    font-size: 1.2rem;  
+    color: #e86a92;  
+    animation: floatText 3s ease-in-out forwards;  
+    z-index: 30;  
+    white-space: nowrap;  
+  }  
+  @keyframes floatText {  
+    0% { opacity: 0; transform: translateY(20px);}  
+    30% { opacity: 1;}  
+    100% { opacity: 0; transform: translateY(-80px);}  
+  }  
+  
+  .confetti {  
+    position: absolute;  
+    width: 10px;  
+    height: 10px;  
+    border-radius: 50%;  
+    animation: fall 3s linear forwards;  
+    z-index: 25;  
+  }  
+  @keyframes fall {  
+    from { transform: translateY(0);}  
+    to { transform: translateY(100vh);}  
+  }  
+  
+  /* popup video */  
+  .video-popup {  
+    display: none;  
+    position: fixed;  
+    top: 0; left: 0;  
+    width: 100%; height: 100%;  
+    background: rgba(0,0,0,0.8);  
+    justify-content: center;  
+    align-items: center;  
+    z-index: 999;  
+  }  
+  .video-popup video {  
+    max-width: 90%;  
+    max-height: 80%;  
+    border-radius: 12px;  
+  }  
+  .video-popup .close {  
+    position: absolute;  
+    top: 20px; right: 20px;  
+    background: #e86a92;  
+    border: none;  
+    color: white;  
+    padding: 10px 18px;  
+    border-radius: 10px;  
+    cursor: pointer;  
+  }  
+  
+  /* balon */  
+  .balloon {  
+    position: absolute;  
+    bottom: -100px;  
+    font-size: 2.5rem;  
+    animation: fly 6s ease-in-out forwards;  
+    z-index: 5;  
+  }  
+  @keyframes fly {  
+    from { transform: translateY(0);}  
+    to { transform: translateY(-120vh);}  
+  }  
+</style>  
+</head>  
+<body>  
+  
+<div class="card" id="card">  
+  <h1>Happy Birthday Putri Ke-23 Tahun yah 🥳🎂!</h1>  
+  <p>Selamat ulang tahun,semoga harimu nyenengin dan bikin kamu senyum terus. 🎉</p>  
+    
+  <button class="button" onclick="showMessage()">Klik Ucapan</button>  
+  <button class="button" onclick="showVideo()">Bolehkah kita jadi teman lagi?</button>  
+  
+  <div class="photo-slideshow" id="photoSlideshow"></div>  
+</div>  
+  
+<div class="cake" onclick="explodeCake()">🎂</div>  
+  
+<audio id="music" src="jamrud-selamat-ulang-tahun.mp3" loop></audio>  
+<audio id="popSound" src="pop.mp3"></audio> <!-- suara balon -->  
+  
+<div class="video-popup" id="videoPopup">  
+  <button class="close" onclick="closeVideo()">Tutup</button>  
+  <video id="videoPlayer" controls>  
+    <source src="video.mp4" type="video/mp4">  
+    Browser kamu tidak mendukung video.  
+  </video>  
+</div>  
+  
+<script>  
+  const music = document.getElementById('music');  
+  let musicPlayed = false;  
+  document.body.addEventListener('click', () => {  
+    if (!musicPlayed) {  
+      music.play();  
+      musicPlayed = true;  
+    }  
+  });  
+  
+  function showMessage() {  
+    alert("Semoga kamu bahagia, makin kuat, makin dewasa, dan tetap jadi dirimu yang unik Aamiin 😅\nDoa terbaik dari aku 💌\n\nYour Ex\nSee you my favorite stranger ✨");  
+  }  
+  
+  // slideshow foto  
+  const slideshowContainer = document.getElementById('photoSlideshow');  
+  const totalPhotos = 23;  
+  const frames = [];  
+  for (let i=1; i<=totalPhotos; i++) {  
+    const frame = document.createElement('div');  
+    frame.classList.add('frame');  
+    const img = document.createElement('img');  
+    img.src = `foto${i}.jpg`;  
+    frame.appendChild(img);  
+    slideshowContainer.appendChild(frame);  
+    frames.push(frame);  
+  }  
+  let current = 0;  
+  frames[current].classList.add('active');  
+  setInterval(() => {  
+    frames[current].classList.remove('active');  
+    current = (current + 1) % totalPhotos;  
+    frames[current].classList.add('active');  
+  }, 3000);  
+  
+  // video  
+  const videoPopup = document.getElementById('videoPopup');  
+  const videoPlayer = document.getElementById('videoPlayer');  
+  function showVideo() {  
+    music.pause();  
+    music.currentTime = 0;  
+    videoPopup.style.display = 'flex';  
+    videoPlayer.play();  
+  }  
+  function closeVideo() {  
+    videoPopup.style.display = 'none';  
+    videoPlayer.pause();  
+    videoPlayer.currentTime = 0;  
+  }  
+  
+  // efek kue  
+  function explodeCake() {  
+    for (let i=0; i<25; i++) {  
+      createConfetti();  
+      if (i % 5 === 0) createFunText();  
+    }  
+  }  
+  function createConfetti() {  
+    const confetti = document.createElement('div');  
+    confetti.classList.add('confetti');  
+    confetti.style.left = Math.random()*window.innerWidth+'px';  
+    confetti.style.top = (Math.random()*window.innerHeight/2)+'px';  
+    confetti.style.backgroundColor = `hsl(${Math.random()*360},70%,70%)`;  
+    confetti.style.animationDuration = 2+Math.random()*2+'s';  
+    document.body.appendChild(confetti);  
+    setTimeout(()=>confetti.remove(),4000);  
+  }  
+  function createFunText() {  
+    const texts = ["Wkwk 🎉","Senyum dulu 😆","Cake time 🍰","Balon terbang 🎈","HBD 😍"];  
+    const div = document.createElement('div');  
+    div.classList.add('fun-text');  
+    div.innerText = texts[Math.floor(Math.random()*texts.length)];  
+    div.style.left = Math.random()*(window.innerWidth-150)+'px';  
+    div.style.top = (window.innerHeight-150)+'px';  
+    document.body.appendChild(div);  
+    setTimeout(()=>div.remove(),4000);  
+  }  
+  
+  // balon sekali saat load  
+  const popSound = document.getElementById('popSound');  
+  window.onload = () => {  
+    for (let i=0; i<8; i++) {  
+      createBalloon(i*200);  
+    }  
+    popSound.play(); // sekali play saat balon muncul  
+  }  
+  function createBalloon(delay=0) {  
+    const balloon = document.createElement('div');  
+    balloon.classList.add('balloon');  
+    balloon.innerText = "🎈";  
+    balloon.style.left = Math.random()*(window.innerWidth-50)+'px';  
+    balloon.style.animationDuration = 5+Math.random()*3+'s';  
+    balloon.style.animationDelay = delay+'ms';  
+    document.body.appendChild(balloon);  
+    setTimeout(()=>balloon.remove(),8000);  
+  }  
+</script>  
+  
+</body>  
 </html>
